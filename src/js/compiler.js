@@ -2876,7 +2876,9 @@ function loadFile(str) {
     window.console.log(lines);
     var sections = generateSections(lines);
     window.console.log(sections);
-    var sss = generateSemiStructuredSections(sections);*/
+    var sss = generateSemiStructuredSections(sections);
+    */
+    // console.log(state)
     return state;
 }
 
