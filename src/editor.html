@@ -25,73 +25,7 @@
 
 <div id="leftpanel"style="display:none;width: 0px;"></div>
 <form id="form1" name="form1"  action="javascript:void(0);"style="display:none;width: 0;"><textarea id="code" class="codeform" name="code" rows="20" cols="20" style="display:none;">
-
-========
-OBJECTS
-========
-
-Background
-green
-
-Target
-darkblue
-
-Wall
-brown
-
-Player
-blue
-
-Crate
-orange
-
-=======
-LEGEND
-=======
-
-. = Background
-# = Wall
-P = Player
-* = Crate
-@ = Crate and Target
-O = Target
-
-=======
-SOUNDS
-=======
-
-================
-COLLISIONLAYERS
-================
-
-Background
-Target
-Player, Wall, Crate
-
-======
-RULES
-======
-
-[ > Player | Crate ] -> [ > Player | > Crate ]
-
-==============
-WINCONDITIONS
-==============
-
-all Target on Crate
-
-=======
-LEVELS
-=======
-
-#########
-#.......#
-#.....@.#
-#.P.*.O.#
-#.......#
-#.......#
-#########
-</textarea></form>
+	</textarea></form>
 
 <div id="verticaldragbar" style="left: 0; position: absolute;"></div>
 
@@ -137,6 +71,7 @@ LEVELS
 </div>
 
 <!--___SCRIPTINSERT___-->
+<script src="js/text_editor.js"></script>
 <script src="js/starter.js"></script>
 <script src="js/Blob.js"></script>
 <script src="js/FileSaver.js"></script>

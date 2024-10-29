@@ -5,7 +5,7 @@
 
 function runClick() {
 	clearConsole();
-	compile(["restart"]);
+	compile(["restart"], text);
 }
 
 function dateToReadable(title,time) {
