@@ -159,6 +159,14 @@ var objects = `
 	00000
 	00000
 	.000.
+
+	MovableBarrel
+	#99440b
+	..0..
+	.000.
+	00000
+	.000.
+	..0..
 	
 	Player
 	Transparent
@@ -475,6 +483,8 @@ var objects = `
 	rightSoldierBuffer
 	transparent
     
+    MovableBuffer
+	transparent
     FloorBuffer
 	transparent
     MainWallBuffer
@@ -532,7 +542,7 @@ var legend_and_sounds = `
 	BeamVert1 = BeamVert
 	BeamVert2 = BeamVert
 
-	Crates = Crate or MovableTable
+	Movables = Crate or MovableTable or MovableBarrel or MovableBuffer
 	
 	Floors = BlackBackground or FloorCells or FloorDiner or FloorPatio
     WallBuffers = MainWallBuffer or VerticalSecondaryWallBuffer or HorizontalSecondaryWallBuffer or TSecondaryWallBuffer or RightTSecondaryWallBuffer or InverseTSecondaryWallBuffer or leftTSecondaryWallBuffer or CrossSecondaryWallBuffer
@@ -543,7 +553,7 @@ var legend_and_sounds = `
 	DoorDown = Door1Open or Door2Open or Door3Open
 	PlayerKey = PlayerSprKey3 or PlayerSprKey2 or PlayerSprKey1
 	
-	Solid = Walls or Crates or Enemy or Target
+	Solid = Walls or Movables or Enemy or Target
 	
 	Number = 0 or 1 or 2 or 3 or 4 or 5 or 6 or 7 or 8 or 9
     
@@ -565,7 +575,7 @@ var legend_and_sounds = `
 	W = Door1 and FloorBuffer
 	
 	
-	t = MovableTable and FloorBuffer
+	t = MovableBuffer and FloorBuffer
 	a = TimerPointer and player and isCellLevel and BlackBackground
 	b = TimerPointer and player and isDinerLevel and BlackBackground
 	c = TimerPointer and player and isPatioLevel and BlackBackground
@@ -607,13 +617,13 @@ var collisions = `
 	Background 
 	Floors
 	Mud
-	Crate Light Key target
+	Light Key target
 	Walls PlayerSpr Enemy KeyDoor
 	Found DoorDown
 	PlayerSprKey1
 	PlayerSprKey2
 	PlayerSprKey3
-	MovableTable
+	Movables
 	TimerPointer
 	Number
 	hasMoved 
@@ -646,9 +656,13 @@ var rules = `
     [isPatioLevel] [ MainWallBuffer ] -> [isPatioLevel] [ WallPatio ]
     [isHQLevel] [ MainWallBuffer ] -> [isHQLevel] [ MainWallBuffer ] (TODO)
 
+    [isDinerLevel] [ MovableBuffer ] -> [isDinerLevel] [ MovableTable ]
+    [isPatioLevel] [ MovableBuffer ] -> [isPatioLevel] [ MovableBarrel ]
+    [isHQLevel] [ MovableBuffer ] -> [isHQLevel] [ MovableBuffer ] (TODO)
+
     [isCellLevel] [ VerticalSecondaryWallBuffer ] -> [isCellLevel] [ VerticalCellWall ]
     [isDinerLevel] [ VerticalSecondaryWallBuffer ] -> [isDinerLevel] [ VerticalDinerWall ]
-    [isPatioLevel] [ VerticalSecondaryWallBuffer ] -> [isPatioLevel] [ VerticalSecondaryWallBuffer ] (TODO)
+    [isPatioLevel] [ VerticalSecondaryWallBuffer ] -> [isPatioLevel] [ VerticalCellWall ] 
     [isHQLevel] [ VerticalSecondaryWallBuffer ] -> [isHQLevel] [ VerticalSecondaryWallBuffer ] (TODO)
     [isCellLevel] [ HorizontalSecondaryWallBuffer ] -> [isCellLevel] [ HorizontalCellWall ] 
     [isDinerLevel] [ HorizontalSecondaryWallBuffer ] -> [isDinerLevel] [ HorizontalDinerWall ]
@@ -685,12 +699,12 @@ var rules = `
 	[ right PlayerSpr no rightPlayer ] -> [right rightPlayer ]
 	
 	(collisions pass time)
-	[> PlayerSpr | Crates ] -> [PlayerSpr | Crates ]
+	[> PlayerSpr | Movables ] -> [PlayerSpr | Movables ]
 	[> PlayerSpr | Wall] -> [PlayerSpr | Wall] 
 	[> PlayerSpr no PlayerKey | KeyDoor] -> [PlayerSpr no PlayerKey | KeyDoor] 
 
 	(kick crate)
-	[action Player] [ PlayerSpr | MovableTable | no solid] -> [Player] [action PlayerSpr | | MovableTable] sfx4
+	[action Player] [ PlayerSpr | Movables | no solid] -> [Player] [action PlayerSpr | | Movables] sfx4
 
 	(walk mud)
 	[> PlayerSpr Mud] [] -> [ > PlayerSpr Mud] [hasMoved2] sfx1
@@ -889,24 +903,37 @@ var levels = `
 		
 	message Next is the yard.
 	
-	-!!c25!!!!!!!!!-
+	-!!c20!!!!!!!!!-
 	-!!!!!!!!!!!!!!-
-	-!............!-
-	-!............!-
-	-!............!-
-	-!............!-
 	-!p...........!-
-	-!............!-
-	-!...mmmm.....!-
-	-!...mmmm.....!-
-	-!...mmmm.....!-
-	-!...mmmm.....!-
-	-!............y-
+	-!....mmm.....!-
+	-!....mmm.mmmm!-
+	-!........mm..y-
 	-!!!!!!!!!!!!!!-		
+
+	message Moving through mud is hard. Takes doble the effort for the same distance. I must watch my step and pick the right path.
+	
+	-!!c20!!!!!!!!!!-
+	-!!!!!!!!!!!!!!!-
+	-!pm...m...mmmm!-
+	-!.m.m.m.m.mmmm!-
+	-!.m.m.m.m.mmmm!-
+	-!...m...m.....y-
+	-!!!!!!!!!!!!!!!-		
+
+	message If any barrels get in the way I can move them
+	
+	-!!c22!!!!!!!!!!-
+	-!!!!!!!!!!!!!!!-
+	-!p....t...mmmm!-
+	-!.....t.mmmmmm!-
+	-!.....t.#mm...!-
+	-!.......#.t...y-
+	-!!!!!!!!!!!!!!!-		
 	
 	message Test Level
 	
-	-!!!b99!!!!!!!!!!!!!-
+	-!!!c99!!!!!!!!!!!!!-
 	-!.................!-
 	-!.......g.........!-
 	-!.mm..............!-
