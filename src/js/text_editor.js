@@ -36,6 +36,17 @@ var objects = `
 	01010
 	11111
 	01010
+
+    WallDiner
+	#C0C0C0 #6e1200
+    11111
+    11111
+    11111
+    11111
+    11111
+
+	WallHQ
+	#171a29
 	
 	FloorCells
 	#999796 (light gray)
@@ -47,6 +58,9 @@ var objects = `
     00000
     11011
     01010
+	
+    FloorHQ
+	#0b0d14
 
     FloorPatio
 	#024d16 #00300d
@@ -55,14 +69,6 @@ var objects = `
     01000
     00010
     00000
-
-    WallDiner
-	#C0C0C0 #6e1200
-    11111
-    11111
-    11111
-    11111
-    11111
 
 	VerticalDinerWall
 	#dbb416 #262424
@@ -143,14 +149,54 @@ var objects = `
 	00000
 	0....
 	.....
+
+	VerticalHQWall
+	#171a29
+	.000.
+	.000.
+	.000.
+	.000.
+	.000.
+
+	RightTHQWall
+	#171a29
+	.000.
+	0000.
+	0000.
+	0000.
+	.000.
+
+	THQWall
+	#171a29
+	.....
+	00000
+	00000
+	00000
+	.000.
+
+	InvertedTHQWall
+	#171a29
+	.000.
+	00000
+	00000
+	00000
+	.....
+
+	HorizontalHQWall
+	#171a29
+	.....
+	00000
+	00000
+	00000
+	.....
 	
-	Crate
-	#8d6268 #6E4D51
+	MovableCrate
+	#4a2001 #8a5a01
 	00000
+	00110
+	01010
+	01100
 	00000
-	11111
-	11111
-	11111
 	
 	MovableTable
 	Green
@@ -542,11 +588,12 @@ var legend_and_sounds = `
 	BeamVert1 = BeamVert
 	BeamVert2 = BeamVert
 
-	Movables = Crate or MovableTable or MovableBarrel or MovableBuffer
+	Movables = MovableCrate or MovableTable or MovableBarrel or MovableBuffer
 	
-	Floors = BlackBackground or FloorCells or FloorDiner or FloorPatio
+	Floors = BlackBackground or FloorCells or FloorDiner or FloorPatio or FloorHQ
     WallBuffers = MainWallBuffer or VerticalSecondaryWallBuffer or HorizontalSecondaryWallBuffer or TSecondaryWallBuffer or RightTSecondaryWallBuffer or InverseTSecondaryWallBuffer or leftTSecondaryWallBuffer or CrossSecondaryWallBuffer
-	Walls = Wall or WallCells or VerticalCellWall or HorizontalCellWall or RightTCellWall or TCellWall or InvertedTCellWall or WallDiner or VerticalDinerWall or RightTDinerWall or TDinerWall or InvertedTDinerWall or HorizontalDinerWall or WallPatio
+	HQWalls = VerticalHQWall or RightTHQWall or THQWall or InvertedTHQWall or HorizontalHQWall or WallHQ
+	Walls = Wall or WallCells or VerticalCellWall or HorizontalCellWall or RightTCellWall or TCellWall or InvertedTCellWall or WallDiner or VerticalDinerWall or RightTDinerWall or TDinerWall or InvertedTDinerWall or HorizontalDinerWall or WallPatio or HQWalls
 	
     Key = Key1 or Key2 or Key3
 	KeyDoor = Door1 or Door2 or Door3
@@ -564,7 +611,7 @@ var legend_and_sounds = `
 	(Cells Section variables)
 	m = Mud
 	# = VerticalSecondaryWallBuffer and FloorBuffer
-	% = RightTCellWall and FloorBuffer
+	% = RightTSecondaryWallBuffer and FloorBuffer
 	@ = TCellWall and FloorBuffer
 	& = InvertedTCellWall and FloorBuffer
 	$ = HorizontalSecondaryWallBuffer and FloorBuffer
@@ -649,33 +696,33 @@ var rules = `
 	[isCellLevel] [FloorBuffer] -> [isCellLevel] [Floorcells]
 	[isDinerLevel] [FloorBuffer] -> [isDinerLevel] [FloorDiner] 
 	[isPatioLevel] [FloorBuffer] -> [isPatioLevel] [FloorPatio]
-	[isHQLevel] [FloorBuffer] -> [isHQLevel] [Floorcells] (TODO)
+	[isHQLevel] [FloorBuffer] -> [isHQLevel] [FloorHQ]
 
     [isCellLevel] [ MainWallBuffer ] -> [isCellLevel] [ WallCells ]
     [isDinerLevel] [ MainWallBuffer ] -> [isDinerLevel] [ WallDiner ]
     [isPatioLevel] [ MainWallBuffer ] -> [isPatioLevel] [ WallPatio ]
-    [isHQLevel] [ MainWallBuffer ] -> [isHQLevel] [ MainWallBuffer ] (TODO)
+    [isHQLevel] [ MainWallBuffer ] -> [isHQLevel] [ WallHQ ]
 
     [isDinerLevel] [ MovableBuffer ] -> [isDinerLevel] [ MovableTable ]
     [isPatioLevel] [ MovableBuffer ] -> [isPatioLevel] [ MovableBarrel ]
-    [isHQLevel] [ MovableBuffer ] -> [isHQLevel] [ MovableBuffer ] (TODO)
+    [isHQLevel] [ MovableBuffer ] -> [isHQLevel] [ MovableCrate ]
 
     [isCellLevel] [ VerticalSecondaryWallBuffer ] -> [isCellLevel] [ VerticalCellWall ]
     [isDinerLevel] [ VerticalSecondaryWallBuffer ] -> [isDinerLevel] [ VerticalDinerWall ]
     [isPatioLevel] [ VerticalSecondaryWallBuffer ] -> [isPatioLevel] [ VerticalCellWall ] 
-    [isHQLevel] [ VerticalSecondaryWallBuffer ] -> [isHQLevel] [ VerticalSecondaryWallBuffer ] (TODO)
+    [isHQLevel] [ VerticalSecondaryWallBuffer ] -> [isHQLevel] [ VerticalHQWall ]
     [isCellLevel] [ HorizontalSecondaryWallBuffer ] -> [isCellLevel] [ HorizontalCellWall ] 
     [isDinerLevel] [ HorizontalSecondaryWallBuffer ] -> [isDinerLevel] [ HorizontalDinerWall ]
     [isPatioLevel] [ HorizontalSecondaryWallBuffer ] -> [isPatioLevel] [ HorizontalSecondaryWallBuffer ] (TODO)
-    [isHQLevel] [ HorizontalSecondaryWallBuffer ] -> [isHQLevel] [ HorizontalSecondaryWallBuffer ] (TODO)
+    [isHQLevel] [ HorizontalSecondaryWallBuffer ] -> [isHQLevel] [ HorizontalHQWall ]
     [isCellLevel] [ TSecondaryWallBuffer ] -> [isCellLevel] [ TSecondaryWallBuffer ] (TODO)
     [isDinerLevel] [ TSecondaryWallBuffer ] -> [isDinerLevel] [ TDinerWall ]
     [isPatioLevel] [ TSecondaryWallBuffer ] -> [isPatioLevel] [ TSecondaryWallBuffer ] (TODO)
-    [isHQLevel] [ TSecondaryWallBuffer ] -> [isHQLevel] [ TSecondaryWallBuffer ] (TODO)
-    [isCellLevel] [ RightTSecondaryWallBuffer ] -> [isCellLevel] [ RightTSecondaryWallBuffer ] (TODO)
+    [isHQLevel] [ TSecondaryWallBuffer ] -> [isHQLevel] [ THQWall ]
+    [isCellLevel] [ RightTSecondaryWallBuffer ] -> [isCellLevel] [ RightTCellWall ]
     [isDinerLevel] [ RightTSecondaryWallBuffer ] -> [isDinerLevel] [ RightTDinerWall ]
     [isPatioLevel] [ RightTSecondaryWallBuffer ] -> [isPatioLevel] [ RightTSecondaryWallBuffer ] (TODO)
-    [isHQLevel] [ RightTSecondaryWallBuffer ] -> [isHQLevel] [ RightTSecondaryWallBuffer ] (TODO)
+    [isHQLevel] [ RightTSecondaryWallBuffer ] -> [isHQLevel] [ RightTHQWall ]
     [isCellLevel] [ InverseTSecondaryWallBuffer ] -> [isCellLevel] [ InverseTSecondaryWallBuffer ] (TODO)
     [isDinerLevel] [ InverseTSecondaryWallBuffer ] -> [isDinerLevel] [ InvertedTDinerWall ]
     [isPatioLevel] [ InverseTSecondaryWallBuffer ] -> [isPatioLevel] [ InverseTSecondaryWallBuffer ] (TODO)
@@ -923,17 +970,25 @@ var levels = `
 
 	message If any barrels get in the way I can move them
 	
-	-!!c22!!!!!!!!!!-
+	-!!c19!!!!!!!!!!-
+	-!!!!!!!!!!!!!!!-
+	-!p...mmmmmmmmm!-
+	-!.......t.m.tt!-
+	-!mmmmmmm#...tt!-
+	-!mmmmmmm#.....y-
+	-!!!!!!!!!!!!!!!-
+
+	-!!c25!!!!!!!!!!-
 	-!!!!!!!!!!!!!!!-
 	-!p....t...mmmm!-
 	-!.....t.mmmmmm!-
 	-!.....t.#mm...!-
 	-!.......#.t...y-
-	-!!!!!!!!!!!!!!!-		
+	-!!!!!!!!!!!!!!!-
 	
 	message Test Level
 	
-	-!!!c99!!!!!!!!!!!!!-
+	-!!!d99!!!!!!!!!!!!!-
 	-!.................!-
 	-!.......g.........!-
 	-!.mm..............!-
@@ -951,3 +1006,7 @@ var levels = `
 `
 
 var text = [prelude, objects, legend_and_sounds, collisions, rules, levels].join('\n')
+
+console.log("#############"*8)
+console.log(text)
+console.log("#############"*8)
