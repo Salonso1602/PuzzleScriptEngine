@@ -367,6 +367,14 @@ var objects = `
     01000
     00010
     00000
+	
+	Oil
+	#423a34 #4a382b
+	01000
+    00010
+    01000
+    00010
+    00000
 
 	upGSoldier
 	green gray #d4b504
@@ -434,35 +442,35 @@ var objects = `
 
 	Door2
 	Blue DarkBlue
-	00000
-	01010
-	00000
-	01010
-	00000
+	.000.
+	.101.
+	.000.
+	.101.
+	.000.
 
 	Door2Open
 	Blue
-	00000
-	0...0
-	0...0
-	0...0
-	00000
+	.000.
+	.....
+	.....
+	.....
+	.000.
 
 	Door3
 	Green DarkGreen
-	00000
+	.....
 	01010
 	00000
 	01010
-	00000
+	.....
 
 	Door3Open
 	Green
-	00000
+	.....
 	0...0
 	0...0
 	0...0
-	00000
+	.....
 
 	Key1
 	DarkGrey Red
@@ -592,8 +600,12 @@ var legend_and_sounds = `
 	
 	Floors = BlackBackground or FloorCells or FloorDiner or FloorPatio or FloorHQ
     WallBuffers = MainWallBuffer or VerticalSecondaryWallBuffer or HorizontalSecondaryWallBuffer or TSecondaryWallBuffer or RightTSecondaryWallBuffer or InverseTSecondaryWallBuffer or leftTSecondaryWallBuffer or CrossSecondaryWallBuffer
+	CellWalls = WallCells or VerticalCellWall or HorizontalCellWall or RightTCellWall or TCellWall or InvertedTCellWall
+	DinerWalls = WallDiner or VerticalDinerWall or RightTDinerWall or TDinerWall or InvertedTDinerWall or HorizontalDinerWall
+	PatioWalls = WallPatio
 	HQWalls = VerticalHQWall or RightTHQWall or THQWall or InvertedTHQWall or HorizontalHQWall or WallHQ
-	Walls = Wall or WallCells or VerticalCellWall or HorizontalCellWall or RightTCellWall or TCellWall or InvertedTCellWall or WallDiner or VerticalDinerWall or RightTDinerWall or TDinerWall or InvertedTDinerWall or HorizontalDinerWall or WallPatio or HQWalls
+	Walls = Wall or CellWalls or DinerWalls or PatioWalls or HQWalls
+	ToughTerrain = Mud or Oil
 	
     Key = Key1 or Key2 or Key3
 	KeyDoor = Door1 or Door2 or Door3
@@ -610,10 +622,11 @@ var legend_and_sounds = `
 	
 	(Cells Section variables)
 	m = Mud
+	o = Oil
 	# = VerticalSecondaryWallBuffer and FloorBuffer
 	% = RightTSecondaryWallBuffer and FloorBuffer
-	@ = TCellWall and FloorBuffer
-	& = InvertedTCellWall and FloorBuffer
+	@ = TSecondaryWallBuffer and FloorBuffer
+	& = InverseTSecondaryWallBuffer and FloorBuffer
 	$ = HorizontalSecondaryWallBuffer and FloorBuffer
 	! = MainWallBuffer
 	p = rightPlayer and FloorBuffer
@@ -663,8 +676,9 @@ var collisions = `
 	
 	Background 
 	Floors
-	Mud
-	Light Key target
+	ToughTerrain
+	Light target
+	Key
 	Walls PlayerSpr Enemy KeyDoor
 	Found DoorDown
 	PlayerSprKey1
@@ -726,7 +740,7 @@ var rules = `
     [isCellLevel] [ InverseTSecondaryWallBuffer ] -> [isCellLevel] [ InverseTSecondaryWallBuffer ] (TODO)
     [isDinerLevel] [ InverseTSecondaryWallBuffer ] -> [isDinerLevel] [ InvertedTDinerWall ]
     [isPatioLevel] [ InverseTSecondaryWallBuffer ] -> [isPatioLevel] [ InverseTSecondaryWallBuffer ] (TODO)
-    [isHQLevel] [ InverseTSecondaryWallBuffer ] -> [isHQLevel] [ InverseTSecondaryWallBuffer ] (TODO)
+    [isHQLevel] [ InverseTSecondaryWallBuffer ] -> [isHQLevel] [ InvertedTHQWall ]
     [isCellLevel] [ leftTSecondaryWallBuffer ] -> [isCellLevel] [ leftTSecondaryWallBuffer ] (TODO)
     [isDinerLevel] [ leftTSecondaryWallBuffer ] -> [isDinerLevel] [ leftTSecondaryWallBuffer ] (TODO)
     [isPatioLevel] [ leftTSecondaryWallBuffer ] -> [isPatioLevel] [ leftTSecondaryWallBuffer ] (TODO)
@@ -754,7 +768,7 @@ var rules = `
 	[action Player] [ PlayerSpr | Movables | no solid] -> [Player] [action PlayerSpr | | Movables] sfx4
 
 	(walk mud)
-	[> PlayerSpr Mud] [] -> [ > PlayerSpr Mud] [hasMoved2] sfx1
+	[> PlayerSpr ToughTerrain] [] -> [ > PlayerSpr ToughTerrain] [hasMoved2] sfx1
 
 	( patrol up down or left right, depends on starting position )
 	right [rightGSoldier | no solid] -> [ > rightGSoldier | no solid]
@@ -985,6 +999,55 @@ var levels = `
 	-!.....t.#mm...!-
 	-!.......#.t...y-
 	-!!!!!!!!!!!!!!!-
+
+	message Now the barracks, the last stretch. I am almost there...
+	
+	-!!!!!!d20!!!!-
+	-!!!!!!!!!!!!!-
+	-!l....t.....y-
+	-!.....tt....!-
+	-!!!!!!!!!!!!!-
+
+	message Keycards, crates, they wont get in my way... This is it
+	
+	-!!!d40!!!!!!!!!!!-
+	-!!!!!!!!!!!!!!!!!-
+	-!tt#...z#....#..!-
+	-!.t#....#....#..y-
+	-!..&$.$$&....s..y-
+	-!h...........#..!-
+	-!p..t........#..!-
+	-!$$$$.$$@$$$x&$$!-
+	-!.......#.......!-
+	-!.......#.......!-
+	-!....f..#...j...!-
+	-!!!!!!!!!!!!!!!!!-
+	
+	message The roof is leaking something, its just as bad as the mud outside... No matter, this time I am getting out.
+	
+	-!!!d45!!!!!!!!!-
+	-!!!!!!!!!!!!!!!-
+	-!t..z.t#j...o.!-
+	-!.....t#....oty-
+	-!...f.t#...oo.y-
+	-!.$$$$$&$x$$$$!-
+	-!p..o......h..!-
+	-!!!!!!!!!!!!!!!-
+
+	message It is now, this time I am finally getting out...
+	
+	-!!!d80!!!!!!!!!!!-
+	-!!!!!!!!!!!!!!!!!-
+	-!.....hz.#.t.t#.!-
+	-!...tt...#.tzt#.y-
+	-!$$$$.$$$%..tt#.y-
+	-!........s....s.!-
+	-!p.......#....#.!-
+	-!$$$$x$$@&$$x$&$!-
+	-!.oo....#......h!-
+	-!jo.t...#.......!-
+	-!.oo....#...tjt.!-
+	-!!!!!!!!!!!!!!!!!-
 	
 	message Test Level
 	
