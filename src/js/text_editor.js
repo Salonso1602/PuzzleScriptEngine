@@ -377,7 +377,7 @@ var objects = `
     00000
 
 	upGSoldier
-	green gray #d4b504
+	#36498a darkgray #d4b504
 	...2.
 	.001.
 	00000
@@ -385,7 +385,7 @@ var objects = `
 	.....
 
 	downGSoldier
-	green gray #d4b504
+	#36498a darkgray #d4b504
 	.....
 	.000.
 	00000
@@ -393,7 +393,7 @@ var objects = `
 	...2.
 
 	rightGSoldier
-	green gray #d4b504
+	#36498a darkgray #d4b504
 	..0..
 	.000.
 	.000.
@@ -401,7 +401,7 @@ var objects = `
 	..0..
 
 	leftGSoldier
-	green gray #d4b504
+	#36498a darkgray #d4b504
 	..0..
 	.000.
 	.000.
@@ -566,7 +566,12 @@ var objects = `
 	transparent
     isHQLevel
 	transparent
-`
+    isFinalLevel
+	transparent
+    triggeredChange
+	transparent
+
+	`
 
 var legend_and_sounds = `
     =======
@@ -596,7 +601,7 @@ var legend_and_sounds = `
 	BeamVert1 = BeamVert
 	BeamVert2 = BeamVert
 
-	Movables = MovableCrate or MovableTable or MovableBarrel or MovableBuffer
+	Movables = MovableCrate or MovableTable or MovableBarrel
 	
 	Floors = BlackBackground or FloorCells or FloorDiner or FloorPatio or FloorHQ
     WallBuffers = MainWallBuffer or VerticalSecondaryWallBuffer or HorizontalSecondaryWallBuffer or TSecondaryWallBuffer or RightTSecondaryWallBuffer or InverseTSecondaryWallBuffer or leftTSecondaryWallBuffer or CrossSecondaryWallBuffer
@@ -640,6 +645,7 @@ var legend_and_sounds = `
 	b = TimerPointer and player and isDinerLevel and BlackBackground
 	c = TimerPointer and player and isPatioLevel and BlackBackground
 	d = TimerPointer and player and isHQLevel and BlackBackground
+	e = TimerPointer and player and isFinalLevel and BlackBackground
 	F = upGSoldier and FloorBuffer
 	G = rightGSoldier and FloorBuffer
 	h = leftGSoldier and FloorBuffer
@@ -662,10 +668,7 @@ var legend_and_sounds = `
 	sfx3 76492101 (open door)
 	sfx4 36167302 (kick)
 	sfx5 85135704 (found)
-	sfx6 
-	sfx7
-	sfx8
-	sfx9
+    sfx6 83905102 (kick air)
 
 `
 
@@ -679,12 +682,11 @@ var collisions = `
 	ToughTerrain
 	Light target
 	Key
-	Walls PlayerSpr Enemy KeyDoor
+	Walls PlayerSpr Enemy KeyDoor Movables
 	Found DoorDown
 	PlayerSprKey1
 	PlayerSprKey2
 	PlayerSprKey3
-	Movables
 	TimerPointer
 	Number
 	hasMoved 
@@ -694,8 +696,10 @@ var collisions = `
 	CountDown2
 	Player
 	buffers
+	isFinalLevel
     WallBuffers
-
+	MovableBuffer
+	triggeredChange
     `
 
 var rules = `
@@ -707,48 +711,50 @@ var rules = `
 	[Found] -> restart
 
     (Map replacing)
-	[isCellLevel] [FloorBuffer] -> [isCellLevel] [Floorcells]
-	[isDinerLevel] [FloorBuffer] -> [isDinerLevel] [FloorDiner] 
-	[isPatioLevel] [FloorBuffer] -> [isPatioLevel] [FloorPatio]
-	[isHQLevel] [FloorBuffer] -> [isHQLevel] [FloorHQ]
+	[isFinalLevel] [no triggeredChange] -> [isFinalLevel isHQLevel] [no triggeredChange]
+	[isFinalLevel isHQLevel] [triggeredChange] -> [isFinalLevel isCellLevel] [triggeredChange]
+	[playerSprKey2] [triggeredChange] -> [playerSprKey1] [triggeredChange]
+	[door2] [triggeredChange] -> [door1] [triggeredChange]
 
-    [isCellLevel] [ MainWallBuffer ] -> [isCellLevel] [ WallCells ]
-    [isDinerLevel] [ MainWallBuffer ] -> [isDinerLevel] [ WallDiner ]
-    [isPatioLevel] [ MainWallBuffer ] -> [isPatioLevel] [ WallPatio ]
-    [isHQLevel] [ MainWallBuffer ] -> [isHQLevel] [ WallHQ ]
+	[isFinalLevel] [ FloorBuffer] -> [isFinalLevel] [FloorHQ FloorBuffer]
+    [isFinalLevel] [ MainWallBuffer ] -> [isFinalLevel] [ WallHQ MainWallBuffer ]
+    [isFinalLevel] [ MovableBuffer ] -> [isFinalLevel] [ MovableCrate MovableBuffer ]
+    [isFinalLevel] [ VerticalSecondaryWallBuffer ] -> [isFinalLevel] [ VerticalSecondaryWallBuffer VerticalHQWall ]
+    [isFinalLevel] [ HorizontalSecondaryWallBuffer ] -> [isFinalLevel] [ HorizontalSecondaryWallBuffer HorizontalHQWall ]
+    [isFinalLevel] [ TSecondaryWallBuffer ] -> [isFinalLevel] [ TSecondaryWallBuffer THQWall ]	
+    [isFinalLevel] [ RightTSecondaryWallBuffer ] -> [isFinalLevel] [ RightTSecondaryWallBuffer RightTHQWall ]
+    [isFinalLevel] [ InverseTSecondaryWallBuffer ] -> [isFinalLevel] [ InverseTSecondaryWallBuffer InvertedTHQWall ]
 
-    [isDinerLevel] [ MovableBuffer ] -> [isDinerLevel] [ MovableTable ]
-    [isPatioLevel] [ MovableBuffer ] -> [isPatioLevel] [ MovableBarrel ]
-    [isHQLevel] [ MovableBuffer ] -> [isHQLevel] [ MovableCrate ]
+	[isCellLevel] [FloorBuffer] -> [isCellLevel] [Floorcells FloorBuffer]
+	[isDinerLevel] [FloorBuffer] -> [isDinerLevel] [FloorDiner FloorBuffer] 
+	[isPatioLevel] [FloorBuffer] -> [isPatioLevel] [FloorPatio FloorBuffer]
+	[isHQLevel] [FloorBuffer] -> [isHQLevel] [FloorHQ FloorBuffer]
 
-    [isCellLevel] [ VerticalSecondaryWallBuffer ] -> [isCellLevel] [ VerticalCellWall ]
-    [isDinerLevel] [ VerticalSecondaryWallBuffer ] -> [isDinerLevel] [ VerticalDinerWall ]
-    [isPatioLevel] [ VerticalSecondaryWallBuffer ] -> [isPatioLevel] [ VerticalCellWall ] 
-    [isHQLevel] [ VerticalSecondaryWallBuffer ] -> [isHQLevel] [ VerticalHQWall ]
-    [isCellLevel] [ HorizontalSecondaryWallBuffer ] -> [isCellLevel] [ HorizontalCellWall ] 
-    [isDinerLevel] [ HorizontalSecondaryWallBuffer ] -> [isDinerLevel] [ HorizontalDinerWall ]
-    [isPatioLevel] [ HorizontalSecondaryWallBuffer ] -> [isPatioLevel] [ HorizontalSecondaryWallBuffer ] (TODO)
-    [isHQLevel] [ HorizontalSecondaryWallBuffer ] -> [isHQLevel] [ HorizontalHQWall ]
-    [isCellLevel] [ TSecondaryWallBuffer ] -> [isCellLevel] [ TSecondaryWallBuffer ] (TODO)
-    [isDinerLevel] [ TSecondaryWallBuffer ] -> [isDinerLevel] [ TDinerWall ]
-    [isPatioLevel] [ TSecondaryWallBuffer ] -> [isPatioLevel] [ TSecondaryWallBuffer ] (TODO)
-    [isHQLevel] [ TSecondaryWallBuffer ] -> [isHQLevel] [ THQWall ]
-    [isCellLevel] [ RightTSecondaryWallBuffer ] -> [isCellLevel] [ RightTCellWall ]
-    [isDinerLevel] [ RightTSecondaryWallBuffer ] -> [isDinerLevel] [ RightTDinerWall ]
-    [isPatioLevel] [ RightTSecondaryWallBuffer ] -> [isPatioLevel] [ RightTSecondaryWallBuffer ] (TODO)
-    [isHQLevel] [ RightTSecondaryWallBuffer ] -> [isHQLevel] [ RightTHQWall ]
-    [isCellLevel] [ InverseTSecondaryWallBuffer ] -> [isCellLevel] [ InverseTSecondaryWallBuffer ] (TODO)
-    [isDinerLevel] [ InverseTSecondaryWallBuffer ] -> [isDinerLevel] [ InvertedTDinerWall ]
-    [isPatioLevel] [ InverseTSecondaryWallBuffer ] -> [isPatioLevel] [ InverseTSecondaryWallBuffer ] (TODO)
-    [isHQLevel] [ InverseTSecondaryWallBuffer ] -> [isHQLevel] [ InvertedTHQWall ]
-    [isCellLevel] [ leftTSecondaryWallBuffer ] -> [isCellLevel] [ leftTSecondaryWallBuffer ] (TODO)
-    [isDinerLevel] [ leftTSecondaryWallBuffer ] -> [isDinerLevel] [ leftTSecondaryWallBuffer ] (TODO)
-    [isPatioLevel] [ leftTSecondaryWallBuffer ] -> [isPatioLevel] [ leftTSecondaryWallBuffer ] (TODO)
-    [isHQLevel] [ leftTSecondaryWallBuffer ] -> [isHQLevel] [ leftTSecondaryWallBuffer ] (TODO)
-    [isCellLevel] [ CrossSecondaryWallBuffer ] -> [isCellLevel] [ CrossSecondaryWallBuffer ] (TODO)
-    [isDinerLevel] [ CrossSecondaryWallBuffer ] -> [isDinerLevel] [ CrossSecondaryWallBuffer ] (TODO)
-    [isPatioLevel] [ CrossSecondaryWallBuffer ] -> [isPatioLevel] [ CrossSecondaryWallBuffer ] (TODO)
-    [isHQLevel] [ CrossSecondaryWallBuffer ] -> [isHQLevel] [ CrossSecondaryWallBuffer ] (TODO)
+    [isCellLevel] [ MainWallBuffer ] -> [isCellLevel] [ WallCells MainWallBuffer ]
+    [isDinerLevel] [ MainWallBuffer ] -> [isDinerLevel] [ WallDiner MainWallBuffer ]
+    [isPatioLevel] [ MainWallBuffer ] -> [isPatioLevel] [ WallPatio MainWallBuffer ]
+    [isHQLevel] [ MainWallBuffer ] -> [isHQLevel] [ WallHQ MainWallBuffer ]
+	
+    [isDinerLevel] [ MovableBuffer ] -> [isDinerLevel] [ MovableTable MovableBuffer]
+    [isPatioLevel] [ MovableBuffer ] -> [isPatioLevel] [ MovableBarrel MovableBuffer]
+    [isHQLevel] [ MovableBuffer ] -> [isHQLevel] [ MovableCrate MovableBuffer ]
+
+    [isCellLevel] [ VerticalSecondaryWallBuffer ] -> [isCellLevel] [ VerticalSecondaryWallBuffer VerticalCellWall ]
+    [isDinerLevel] [ VerticalSecondaryWallBuffer ] -> [isDinerLevel] [ VerticalSecondaryWallBuffer VerticalDinerWall ]
+    [isPatioLevel] [ VerticalSecondaryWallBuffer ] -> [isPatioLevel] [ VerticalSecondaryWallBuffer VerticalCellWall ] 
+    [isHQLevel] [ VerticalSecondaryWallBuffer ] -> [isHQLevel] [ VerticalSecondaryWallBuffer VerticalHQWall ]
+    [isCellLevel] [ HorizontalSecondaryWallBuffer ] -> [isCellLevel] [ HorizontalSecondaryWallBuffer HorizontalCellWall ] 
+    [isDinerLevel] [ HorizontalSecondaryWallBuffer ] -> [isDinerLevel] [ HorizontalSecondaryWallBuffer HorizontalDinerWall ]
+    [isHQLevel] [ HorizontalSecondaryWallBuffer ] -> [isHQLevel] [ HorizontalSecondaryWallBuffer HorizontalHQWall ]
+    [isCellLevel] [ TSecondaryWallBuffer ] -> [isCellLevel] [ TSecondaryWallBuffer TCellWall ]
+    [isDinerLevel] [ TSecondaryWallBuffer ] -> [isDinerLevel] [ TSecondaryWallBuffer TDinerWall ]
+    [isHQLevel] [ TSecondaryWallBuffer ] -> [isHQLevel] [ TSecondaryWallBuffer THQWall ]
+    [isCellLevel] [ RightTSecondaryWallBuffer ] -> [isCellLevel] [ RightTSecondaryWallBuffer RightTCellWall ]
+    [isDinerLevel] [ RightTSecondaryWallBuffer ] -> [isDinerLevel] [ RightTSecondaryWallBuffer RightTDinerWall ]
+    [isHQLevel] [ RightTSecondaryWallBuffer ] -> [isHQLevel] [ RightTSecondaryWallBuffer RightTHQWall ]
+    [isCellLevel] [ InverseTSecondaryWallBuffer ] -> [isCellLevel] [ InverseTSecondaryWallBuffer InvertedTCellWall ]
+    [isDinerLevel] [ InverseTSecondaryWallBuffer ] -> [isDinerLevel] [ InverseTSecondaryWallBuffer InvertedTDinerWall ]
+    [isHQLevel] [ InverseTSecondaryWallBuffer ] -> [isHQLevel] [ InverseTSecondaryWallBuffer InvertedTHQWall ]
 	
 	(Movement)
 	[> Player] [PlayerSpr] -> [Player] [> PlayerSpr] sfx0
@@ -758,14 +764,10 @@ var rules = `
 	[ down PlayerSpr no downPlayer ] -> [down downPlayer ]
 	[ left PlayerSpr no leftPlayer ] -> [left leftPlayer ]
 	[ right PlayerSpr no rightPlayer ] -> [right rightPlayer ]
-	
-	(collisions pass time)
-	[> PlayerSpr | Movables ] -> [PlayerSpr | Movables ]
-	[> PlayerSpr | Wall] -> [PlayerSpr | Wall] 
-	[> PlayerSpr no PlayerKey | KeyDoor] -> [PlayerSpr no PlayerKey | KeyDoor] 
 
 	(kick crate)
-	[action Player] [ PlayerSpr | Movables | no solid] -> [Player] [action PlayerSpr | | Movables] sfx4
+	[action Player] [ PlayerSpr | Movables MovableBuffer | no solid] -> [Player] [action PlayerSpr | | Movables MovableBuffer] sfx4
+    [action Player] [ PlayerSpr | no Movables no MovableBuffer] -> sfx6
 
 	(walk mud)
 	[> PlayerSpr ToughTerrain] [] -> [ > PlayerSpr ToughTerrain] [hasMoved2] sfx1
@@ -842,8 +844,10 @@ var rules = `
 	late [kicked] [no hasMoved2] -> [hasMoved] []
 	ENDLOOP
 
-
 	(Doors with Keys)
+	[ > PlayerSpr PlayerSprKey1 | Door1 ] [isFinalLevel] [triggeredChange] -> sfx3 win
+	late [PlayerSpr Key2] [isFinalLevel] [] -> [PlayerSpr PlayerSprKey2] [isFinalLevel] [triggeredChange] sfx2 (final level specific)
+	
 	[> PlayerSpr PlayerSprKey1] -> [> PlayerSpr > PlayerSprKey1]
 	[> PlayerSpr PlayerSprKey2] -> [> PlayerSpr > PlayerSprKey2]
 	[> PlayerSpr PlayerSprKey3] -> [> PlayerSpr > PlayerSprKey3]
@@ -856,11 +860,10 @@ var rules = `
 	late [PlayerSpr Key1] -> [PlayerSpr PlayerSprKey1] sfx2
 	late [PlayerSpr Key2] -> [PlayerSpr PlayerSprKey2] sfx2
 	late [PlayerSpr Key3] -> [PlayerSpr PlayerSprKey3] sfx2
-
 	
 	(Turns player into Found)
 	late [Found] -> []
-	late [ 0 | 0 ] [PlayerSpr] [TimerPointer Player] -> [0 | 0] [PlayerSpr Found] [TimerPointer Player] sfx5
+	late [ 0 | 0 ] [PlayerSpr no Target] [TimerPointer Player] -> [0 | 0] [PlayerSpr Found] [TimerPointer Player] sfx5
 	late [PlayerSpr Soldierhbox] -> [PlayerSpr Found] sfx5
 
 	late [PlayerSpr Target] -> win
@@ -889,7 +892,7 @@ var levels = `
 	-!......Q.#........!-
 	-!!!!!!!!!!yyyyyyyy!-
 	
-	message They wont get me if I move just enough not to trigger the alarms
+	message They won't get me if I move just enough not to trigger the alarms
 	
 	-!!!!!!a40!!!!!!!!!!!-
 	-!.l..#....#...#....!-
@@ -1008,7 +1011,7 @@ var levels = `
 	-!.....tt....!-
 	-!!!!!!!!!!!!!-
 
-	message Keycards, crates, they wont get in my way... This is it
+	message Keycards, crates, they won't get in my way... This is it
 	
 	-!!!d40!!!!!!!!!!!-
 	-!!!!!!!!!!!!!!!!!-
@@ -1023,7 +1026,7 @@ var levels = `
 	-!....f..#...j...!-
 	-!!!!!!!!!!!!!!!!!-
 	
-	message The roof is leaking something, its just as bad as the mud outside... No matter, this time I am getting out.
+	message The roof is leaking something, it's just as bad as the mud outside... No matter, this time I am getting out.
 	
 	-!!!d45!!!!!!!!!-
 	-!!!!!!!!!!!!!!!-
@@ -1036,7 +1039,7 @@ var levels = `
 
 	message It is now, this time I am finally getting out...
 	
-	-!!!d80!!!!!!!!!!!-
+	-!!!d79!!!!!!!!!!!-
 	-!!!!!!!!!!!!!!!!!-
 	-!.....hz.#.t.t#.!-
 	-!...tt...#.tzt#.y-
@@ -1049,7 +1052,48 @@ var levels = `
 	-!.oo....#...tjt.!-
 	-!!!!!!!!!!!!!!!!!-
 	
-	message Test Level
+	message That was it...
+	
+	-!!!!!!d14!!!!-
+	-!!!!!!!!!!!!!-
+	-!...........!-
+	-!...........!-
+	-!p..........y-
+	-!...........!-
+	-!...........!-
+	-!!!!!!!!!!!!!-
+	
+	message Im finally out, after so long...
+	
+	-!!!!!!d13!!!!-
+	-!!!!!!!!!!!!!-
+	-!...........!-
+	-!p..........y-
+	-!...........!-
+	-!!!!!!!!!!!!!-
+	
+	message I am finally free, I am getting out... this time...
+	
+	-!!!!!!d12!!!!-
+	-!!!!!!!!!!!!!-
+	-!p..........y-
+	-!!!!!!!!!!!!!-
+	
+	message Thats the exit, just one more door...
+	
+	-!!!e99!!!!!!!!!!!!!-
+	-!........#........!-
+	-!........#........!-
+	-!........#........!-
+	-!........#........!-
+	-!$$$$$$$$%........!-
+	-!........#........!-
+	-!..P.....s........!-
+	-!........#........!-
+	-!......j.#........!-
+	-!!!!!!!!!!yyyyyyyy!-
+
+	(message Test Level
 	
 	-!!!d99!!!!!!!!!!!!!-
 	-!.................!-
@@ -1062,14 +1106,14 @@ var levels = `
 	-!.q.....W......f..!-
 	-!.j.....S.....m...!-
 	-!.z.....X....mym..!-
-	-!!!!!!!!!!!!!!!!!!!-
+	-!!!!!!!!!!!!!!!!!!!- )
 
+	message I will get out, This time it will be different...
 	message Thank you for playing!
-
 `
 
 var text = [prelude, objects, legend_and_sounds, collisions, rules, levels].join('\n')
 
-console.log("#############"*8)
+console.log("#############")
 console.log(text)
-console.log("#############"*8)
+console.log("#############")

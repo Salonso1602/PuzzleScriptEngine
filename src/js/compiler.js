@@ -2886,7 +2886,7 @@ var ifrm;
 
 function compile(command, text, randomseed) {
     matchCache = {};
-    console.log(text)
+    // console.log(text)
     forceRegenImages = true;
     if (command === undefined) {
         command = ["restart"];

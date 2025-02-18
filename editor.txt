@@ -1,0 +1,703 @@
+	title This Time
+	author yours truly
+	
+	run_rules_on_level_start
+	norepeat_action
+	noundo
+	
+	========
+	OBJECTS
+	========
+	
+	Background
+	#c5ccb8
+	
+	BoundaryWall
+	Transparent
+	
+	Wall
+	#93a167 #557064
+	11111
+	11111
+	11111
+	11111
+	11111
+	
+	WallCells
+	#545453 (gray)
+	
+	FloorCells
+	#999796 (light gray)
+
+	VerticalCellWall
+	#3b3b39
+	..00.
+	..0..
+	..0..
+	..0..
+	.00..
+
+	RightTCellWall
+	#3b3b39
+	..00.
+	..0..
+	000..
+	0.0..
+	..0..
+
+	TCellWall
+	#3b3b39
+	.....
+	....0
+	00000
+	0.0..
+	..0..
+
+	InvertedTCellWall
+	#3b3b39
+	..0..
+	0.0..
+	00000
+	....0
+	.....
+
+	HorizontalCellWall
+	#3b3b39
+	.....
+	....0
+	00000
+	0....
+	.....
+	
+	Crate
+	#8d6268 #6E4D51
+	00000
+	00000
+	11111
+	11111
+	11111
+	
+	TimeCrate
+	#70568F #433455
+	00000
+	00000
+	11111
+	11111
+	11111
+	
+	Player
+	Transparent
+	
+	Found
+	red
+	..0..
+	..0..
+	..0..
+	.....
+	..0..	
+	
+	TimerPointer
+	#f7e26b #6e6962
+	..1..
+	...1.
+	11111
+	...1.
+	..1..
+	
+	upPlayer
+	orange #f0bf97 #d6c19c
+	.....
+	.020.
+	00100
+	.000.
+	.....
+
+	downPlayer
+	orange #f0bf97 #d6c19c
+	.....
+	.000.
+	00100
+	.020.
+	.....
+
+	rightPlayer
+	orange #f0bf97 #d6c19c
+	..0..
+	.000.
+	.012.
+	.000.
+	..0..
+
+	leftPlayer
+	orange #f0bf97 #d6c19c
+	..0..
+	.000.
+	.210.
+	.000.
+	..0..
+	
+	0
+	#f0f6f0 
+	.....
+	..0..
+	.0.0.
+	.0.0.
+	..0..
+	
+	1
+	#f0f6f0 
+	.....
+	..0..
+	.00..
+	..0..
+	.000.
+	
+	2
+	#f0f6f0 
+	.....
+	.00..
+	...0.
+	..0..
+	.000.
+	
+	3
+	#f0f6f0 
+	.....
+	.000.
+	..00.
+	...0.
+	.000.
+	
+	4
+	#f0f6f0 
+	.....
+	.0...
+	.0.0.
+	.000.
+	...0.
+	
+	5
+	#f0f6f0 
+	.....
+	.00..
+	.000.
+	...0.
+	.000.
+	
+	6
+	#f0f6f0 
+	.....
+	.0...
+	.0...
+	.000.
+	.000.
+	
+	7
+	#f0f6f0 
+	.....
+	.000.
+	...0.
+	..0..
+	.0...
+	
+	8
+	#f0f6f0 
+	.....
+	.000.
+	.000.
+	.0.0.
+	.000.
+	
+	9
+	#f0f6f0 
+	.....
+	.000.
+	.0.0.
+	.000.
+	...0.
+	
+	CountDown
+	transparent
+
+	CountDown2
+	transparent
+	
+	hasMoved
+	Transparent
+	
+	hasMoved2
+	Transparent
+	
+	Mud
+	brown
+
+	upGSoldier
+	green gray #d4b504
+	...2.
+	.001.
+	00000
+	.000.
+	.....
+
+	downGSoldier
+	green gray #d4b504
+	.....
+	.000.
+	00000
+	.001.
+	...2.
+
+	rightGSoldier
+	green gray #d4b504
+	..0..
+	.000.
+	.000.
+	.0012
+	..0..
+
+	leftGSoldier
+	green gray #d4b504
+	..0..
+	.000.
+	.000.
+	2100.
+	..0..
+
+	BeamVert
+	White Yellow
+	.101.
+	.101.
+	.101.
+	.101.
+	.101.
+
+	BeamHor
+	White Yellow
+	.....
+	11111
+	00000
+	11111
+	.....
+
+	Door1
+	#3b3b39 Red
+	..00.
+	..0..
+	.101.
+	..0..
+	.00..
+
+	Door1Open
+	#3b3b39 Red
+	1000.
+	.....
+	.....
+	.....
+	.0001
+
+	Door2
+	Blue DarkBlue
+	00000
+	01010
+	00000
+	01010
+	00000
+
+	Door2Open
+	Blue
+	00000
+	0...0
+	0...0
+	0...0
+	00000
+
+	Door3
+	Green DarkGreen
+	00000
+	01010
+	00000
+	01010
+	00000
+
+	Door3Open
+	Green
+	00000
+	0...0
+	0...0
+	0...0
+	00000
+
+	Key1
+	DarkGrey Red
+	..00.
+	..0..
+	..1..
+	.0.0.
+	..0..
+
+	Key2
+	Blue Grey
+	.....
+	.100.
+	.100.
+	.100.
+	.....
+
+	Key3
+	Green Grey
+	.....
+	.100.
+	.100.
+	.100.
+	.....
+
+	PlayerSprKey1
+	Red
+	0....
+	.....
+	.....
+	.....
+	.....
+
+	PlayerSprKey2
+	Blue
+	.....
+	0....
+	.....
+	.....
+	.....
+
+	PlayerSprKey3
+	Green
+	.....
+	.....
+	0....
+	.....
+	.....
+	
+	Target
+	Yellow
+	0...0
+	.0.0.
+	..0..
+	.0.0.
+	0...0
+
+	upSoldierBuffer
+	transparent
+	downSoldierBuffer
+	transparent
+	leftSoldierBuffer
+	transparent
+	rightSoldierBuffer
+	transparent
+
+	=======
+	LEGEND
+	=======
+
+	playerSpr = upPlayer or downPlayer or leftPlayer or rightPlayer
+	buffers = upSoldierBuffer or downSoldierBuffer or leftSoldierBuffer or rightSoldierBuffer
+	Enemy = upGSoldier or downGSoldier or leftGSoldier or rightGSoldier
+	GSoldier = upGSoldier or downGSoldier or leftGSoldier or rightGSoldier
+	upSoldier = upGSoldier
+	downSoldier = downGSoldier
+	leftSoldier = leftGSoldier 
+	rightSoldier = rightGSoldier
+	vSoldier = upsoldier or downsoldier
+	hSoldier = rightsoldier or leftsoldier
+	Light = BeamVert or BeamHor 
+	Hlight = BeamHor 
+	Vlight = BeamVert 
+	SoldierHBox = gsoldier or light
+
+	BeamHor0 = BeamHor
+	BeamHor1 = BeamHor
+	BeamHor2 = BeamHor
+	BeamVert0 = BeamVert
+	BeamVert1 = BeamVert
+	BeamVert2 = BeamVert
+
+	Crates = Crate or TimeCrate
+	
+	. = FloorCells
+	Floors = FloorCells
+	Walls = Wall or WallCells or VerticalCellWall or HorizontalCellWall or RightTCellWall or TCellWall or InvertedTCellWall
+
+	- = Background
+	
+	(Cells Section references)
+	m = Background and Mud
+	# = VerticalCellWall
+	% = RightTCellWall
+	@ = TCellWall
+	& = InvertedTCellWall
+	$ = HorizontalCellWall
+	! = BoundaryWall and WallCells
+	p = rightPlayer
+	l = downPlayer
+	Q = Key1 and FloorCells
+	W = Door1 and FloorCells
+	
+	
+	t = TimeCrate
+	c = TimerPointer and player
+	F = upGSoldier
+	G = rightGSoldier
+	h = leftGSoldier
+
+	(Key_Door entities)
+	A = Key2
+	S = Door2
+	Z = Key3
+	X = Door3
+	Key = Key1 or Key2 or Key3
+	KeyDoor = Door1 or Door2 or Door3
+	DoorDown = Door1Open or Door2Open or Door3Open
+	PlayerKey = PlayerSprKey3 or PlayerSprKey2 or PlayerSprKey1
+	
+	Solid = Walls or Crates or Enemy or Target
+	
+	Number = 0 or 1 or 2 or 3 or 4 or 5 or 6 or 7 or 8 or 9
+	
+	B = target
+	
+	=======
+	SOUNDS
+	=======
+
+	sfx0 93446702 (normal step)
+	sfx1 89209507 (mud extra step)
+	sfx2 63223300 (pickup key)
+	sfx3 76492101 (open door)
+	sfx4 36167302 (kick)
+	sfx5 85135704 (found)
+	sfx6 
+	sfx7
+	sfx8
+	sfx9
+	
+	================
+	COLLISIONLAYERS
+	================
+	
+	Background 
+	Floors
+	Mud
+	Crate Light Key target
+	Walls PlayerSpr Enemy KeyDoor
+	BoundaryWall
+	Found DoorDown
+	PlayerSprKey1
+	PlayerSprKey2
+	PlayerSprKey3
+	TimeCrate
+	TimerPointer
+	Number
+	hasMoved 
+	hasMoved2
+	CountDown 
+	CountDown2
+	Player
+	buffers
+	
+	======
+	RULES
+	======
+
+	[Found] -> restart
+
+	[Background] -> [Floorcells]
+	
+	(Movement)
+	[> Player] [PlayerSpr] -> [Player] [> PlayerSpr] sfx0
+
+	(player sprite rotation)
+	[ up PlayerSpr no upPlayer ] -> [ up upPlayer ]
+	[ down PlayerSpr no downPlayer ] -> [down downPlayer ]
+	[ left PlayerSpr no leftPlayer ] -> [left leftPlayer ]
+	[ right PlayerSpr no rightPlayer ] -> [right rightPlayer ]
+	
+	(collisions pass time but not moves)
+	[> PlayerSpr Found] -> [PlayerSpr Found] cancel
+	[> PlayerSpr | Crates ] -> [PlayerSpr | Crates ]
+	[> PlayerSpr | Wall] -> [PlayerSpr | Wall] 
+	[> PlayerSpr no PlayerKey | KeyDoor] -> [PlayerSpr no PlayerKey | KeyDoor] 
+
+	(kick crate)
+	[action Player] [ PlayerSpr | TimeCrate | no solid] -> [Player] [action PlayerSpr | | TimeCrate] sfx4
+
+	(walk mud)
+	[> PlayerSpr Mud] [] -> [ > PlayerSpr Mud] [hasMoved2] sfx1
+
+	(Enemy G Soldier rotation per frame )
+	left [ leftGSoldier | | | solid ] ->  [ rightSoldierBuffer | | | solid]
+	right [ rightGSoldier | | | solid ] ->  [ leftSoldierBuffer | | | solid]
+	up [ upGSoldier | | | solid ] ->  [ downSoldierBuffer | | | solid]
+	down [ downGSoldier | | | solid ] ->  [ upSoldierBuffer | | | solid]
+	left [ leftGSoldier | solid ] ->  [ rightSoldierBuffer | solid]
+	right [ rightGSoldier | solid ] ->  [ leftSoldierBuffer | solid]
+	up [ upGSoldier | solid ] ->  [ downSoldierBuffer | solid]
+	down [ downGSoldier | solid ] ->  [ upSoldierBuffer | solid]
+	left [ leftGSoldier | | solid ] ->  [ rightSoldierBuffer | | solid]
+	right [ rightGSoldier | |  solid ] ->  [ leftSoldierBuffer | | solid]
+	up [ upGSoldier | | solid ] ->  [ downSoldierBuffer | | solid]
+	down [ downGSoldier | | solid ] ->  [ upSoldierBuffer|  | solid]
+	[ upSoldierBuffer ] ->  [ upGSoldier ]
+	[ rightSoldierBuffer ] ->  [rightGSoldier]
+	[ leftSoldierBuffer ] ->  [leftGSoldier]
+	[ downSoldierBuffer ] ->  [downGSoldier]
+
+	(light beam cleanup after rotating)
+	[ no vsoldier | vlight  ] ->  [no vsoldier | ]
+	[ no hsoldier | hlight  ] ->  [no hsoldier | ]
+
+	(Light casting onto the direction the Gsoldier is looking)
+	late right[rightGSoldier|no solid no Light] -> [rightGSoldier | BeamHor]
+	late right[rightGSoldier|Light|no solid no Light] -> [rightGSoldier | BeamHor | BeamHor]
+	late up[upGSoldier|no solid no Light] -> [upGSoldier | BeamVert]
+	late up[upGSoldier|Light|no solid no Light] -> [upGSoldier | BeamVert | BeamVert]
+	late left [leftGSoldier|no solid no Light] -> [leftGSoldier | BeamHor]
+	late left[leftGSoldier|Light|no solid no Light] -> [leftGSoldier | BeamHor | BeamHor]
+	late down [downGSoldier|no solid no Light] -> [downGSoldier | BeamVert]
+	late down [downGSoldier|Light|no solid no Light] ->  [downGSoldier | BeamVert | BeamVert]
+
+	( patrol up down or left right, depends on starting position )
+	right [rightGSoldier | no solid] -> [ > rightGSoldier | no solid]
+	left [leftGSoldier | no solid] -> [> leftGSoldier | no solid]
+
+	up [upGSoldier | no solid] -> [ > upGSoldier | no solid]
+	down [downGSoldier | no solid] -> [> downGSoldier | no solid]
+		
+	(convert the action state to an object)
+	[hasMoved] -> []
+	[moving PlayerSpr] [] -> [moving PlayerSpr] [hasMoved]
+	
+	(Player/Camera)
+	late [PlayerSpr] -> [PlayerSpr Player]
+	late [Player no BoundaryWall | ] -> [Player | Player]
+	
+	(Timer)
+	(Decrease when player moves)
+	STARTLOOP
+	late [TimerPointer Player | no 0 | 0] [PlayerSpr] [hasMoved] -> [TimerPointer Player | | 9 Countdown] [PlayerSpr] []
+	late [TimerPointer Player | | 1] [PlayerSpr] [hasMoved] -> [TimerPointer Player | | 0] [PlayerSpr] []
+	late [TimerPointer Player | | 2] [PlayerSpr] [hasMoved] -> [TimerPointer Player | | 1] [PlayerSpr] []
+	late [TimerPointer Player | | 3] [PlayerSpr] [hasMoved] -> [TimerPointer Player | | 2] [PlayerSpr] []
+	late [TimerPointer Player | | 4] [PlayerSpr] [hasMoved] -> [TimerPointer Player | | 3] [PlayerSpr] []
+	late [TimerPointer Player | | 5] [PlayerSpr] [hasMoved] -> [TimerPointer Player | | 4] [PlayerSpr] []
+	late [TimerPointer Player | | 6] [PlayerSpr] [hasMoved] -> [TimerPointer Player | | 5] [PlayerSpr] []
+	late [TimerPointer Player | | 7] [PlayerSpr] [hasMoved] -> [TimerPointer Player | | 6] [PlayerSpr] []
+	late [TimerPointer Player | | 8] [PlayerSpr] [hasMoved] -> [TimerPointer Player | | 7] [PlayerSpr] []
+	late [TimerPointer Player | | 9 no CountDown] [PlayerSpr] [hasMoved] -> [TimerPointer Player | | 8] [PlayerSpr] []
+	(Tens digit countdown)
+	late right [1 | CountDown] -> [0 | ]
+	late right [2 | CountDown] -> [1 | ]
+	late right [3 | CountDown] -> [2 | ]
+	late right [4 | CountDown] -> [3 | ]
+	late right [5 | CountDown] -> [4 | ]
+	late right [6 | CountDown] -> [5 | ]
+	late right [7 | CountDown] -> [6 | ]
+	late right [8 | CountDown] -> [7 | ]
+	late right [9 | CountDown] -> [8 | ]
+	late [hasMoved] -> []
+	late [hasMoved2] -> [hasMoved]
+	ENDLOOP
+
+
+	(Doors with Keys)
+	[> PlayerSpr PlayerSprKey1] -> [> PlayerSpr > PlayerSprKey1]
+	[> PlayerSpr PlayerSprKey2] -> [> PlayerSpr > PlayerSprKey2]
+	[> PlayerSpr PlayerSprKey3] -> [> PlayerSpr > PlayerSprKey3]
+
+	[ > PlayerSpr PlayerSprKey1 | Door1 ] -> [ | PlayerSpr Door1Open] sfx3
+	[ > PlayerSpr PlayerSprKey2 | Door2 ] -> [ | PlayerSpr Door2Open] sfx3
+	[ > PlayerSpr PlayerSprKey3 | Door3 ] -> [ | PlayerSpr Door3Open] sfx3
+	late [PlayerSpr no PlayerKey] [PlayerKey] -> [PlayerSpr PlayerKey] []
+
+	late [PlayerSpr Key1] -> [PlayerSpr PlayerSprKey1] sfx2
+	late [PlayerSpr Key2] -> [PlayerSpr PlayerSprKey2] sfx2
+	late [PlayerSpr Key3] -> [PlayerSpr PlayerSprKey3] sfx2
+
+	
+	(Turns player into Found)
+	late [PlayerSpr no Found] -> [PlayerSpr]
+	late [Found] -> []
+	late [0 | 0 Player] [PlayerSpr] [TimerPointer Player] -> [0 | 0] [PlayerSpr Found] [TimerPointer Player] sfx5
+	late [PlayerSpr Soldierhbox] -> [PlayerSpr Found] sfx5
+
+	late [PlayerSpr Target] -> win
+	
+	==============
+	WINCONDITIONS
+	==============	
+
+	=======
+	LEVELS
+	=======
+	
+	message I will get out, This time it will be different
+	
+	-!!!c99!!!!!!!!!!!!!-
+	-!........#........!-
+	-!........#........!-
+	-!........#........!-
+	-!........#........!-
+	-!$$$$$$$$%........!-
+	-!........#........!-
+	-!..P.....W........!-
+	-!........#........!-
+	-!......Q.#........!-
+	-!!!!!!!!!!bbbbbbbb!-
+	
+	message They wont get me if a move just enough not to trigger the alarms
+	
+	-!!!!!!c40!!!!!!!!!!!-
+	-!.l..#....#...#....!-
+	-!....#....#...W....B-
+	-!....&$$$$&...#....B-
+	-!.............#....!-
+	-!$$$$@$$$$@...!!!!!!-
+	-!....#....#........!-
+	-!....#....#......Q.!-
+	-!!!!!!!!!!!!!!!!!!!!-
+	
+	message The guards are always asleep at this time. They move by muscle memory alone
+	
+	-!!!c20!!!!!!!!!!!-
+	-!!l!!!!!!!!!!!!!!-
+	-!..g............B-
+	-!.........h.....B-
+	-!!!!!!!!.!!!!!!!!-
+	-!!!!!!!!!!!!!!!!!-
+
+	message I can wait them out by a wall, but not forever
+	
+	-!!!!!!c40!!!!!!!!!!!-
+	-!!!!!!!!!!!!!!!!!!!!-
+	-!....#..Q.#...#....!-
+	-!....#....#...W....B-
+	-!..$$&$..$&...#....B-
+	-!p.........h..#....!-
+	-!$.$$@$$.$@...!!!!!!-
+	-!....#....#....#...!-
+	-!....#....#....#...!-
+	-!....#....#..f.#...!-
+	-!!!!!!!!!!!!!!!!!!!!-
+	
+	message Test Level
+	
+	-!!!c99!!!!!!!!!!!!!-
+	-!.................!-
+	-!.......g.........!-
+	-!.mm..............!-
+	-!.mm..............!-
+	-!...p...t.........!-
+	-!.................!-
+	-!.................!-
+	-!.q.....W......f..!-
+	-!.a.....S.....m...!-
+	-!.z.....X....mBm..!-
+	-!!!!!!!!!!!!!!!!!!!-
+
+	message Thank you for playing!
